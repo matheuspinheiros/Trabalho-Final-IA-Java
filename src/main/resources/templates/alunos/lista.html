@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head}"></head>
+<body>
+<nav th:replace="~{layout/base :: nav}"></nav>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Alunos</h1>
+        <a class="btn btn-primary" th:href="@{/alunos/novo}">Novo Aluno</a>
+    </div>
+
+    <table class="table table-striped table-hover bg-white">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Curso</th>
+            <th>Acoes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="aluno : ${alunos}">
+            <td th:text="${aluno.id}"></td>
+            <td th:text="${aluno.nome}"></td>
+            <td th:text="${aluno.email}"></td>
+            <td th:text="${aluno.curso.nome}"></td>
+            <td class="table-actions">
+                <a class="btn btn-sm btn-warning" th:href="@{/alunos/editar/{id}(id=${aluno.id})}">Editar</a>
+                <a class="btn btn-sm btn-danger" th:href="@{/alunos/excluir/{id}(id=${aluno.id})}" onclick="return confirm('Deseja excluir este aluno?')">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

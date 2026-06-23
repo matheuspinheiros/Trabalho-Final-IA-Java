@@ -1,0 +1,14 @@
+digraph G {
+    graph [rankdir=LR, bgcolor="white"];
+    node [shape=record, fontname="Arial", fontsize=10];
+    edge [fontname="Arial", fontsize=9];
+
+    Curso [label="{Curso|id: Long\lnome: String\lturno: String\l|alunos: List<Aluno>\l}"];
+    Aluno [label="{Aluno|id: Long\lnome: String\lemail: String\l|curso: Curso\latividades: List<Atividade>\l}"];
+    Atividade [label="{Atividade|id: Long\ltitulo: String\ldescricao: String\ldataEntrega: LocalDate\lstatus: StatusAtividade\l|aluno: Aluno\l}"];
+    StatusAtividade [label="{StatusAtividade|PENDENTE\lEM_ANDAMENTO\lCONCLUIDA\l}"];
+
+    Curso -> Aluno [label="1 para N"];
+    Aluno -> Atividade [label="1 para N"];
+    Atividade -> StatusAtividade [label="usa"];
+}

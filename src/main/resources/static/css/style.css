@@ -1,0 +1,17 @@
+body {
+    background-color: #f5f6fa;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.card-dashboard {
+    border: 0;
+    border-radius: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.table-actions a {
+    margin-right: 6px;
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head}"></head>
+<body>
+<nav th:replace="~{layout/base :: nav}"></nav>
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Atividades</h1>
+        <a class="btn btn-primary" th:href="@{/atividades/nova}">Nova Atividade</a>
+    </div>
+
+    <table class="table table-striped table-hover bg-white">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>Aluno</th>
+            <th>Entrega</th>
+            <th>Status</th>
+            <th>Acoes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="atividade : ${atividades}">
+            <td th:text="${atividade.id}"></td>
+            <td th:text="${atividade.titulo}"></td>
+            <td th:text="${atividade.aluno.nome}"></td>
+            <td th:text="${#temporals.format(atividade.dataEntrega, 'dd/MM/yyyy')}"></td>
+            <td th:text="${atividade.status}"></td>
+            <td class="table-actions">
+                <a class="btn btn-sm btn-warning" th:href="@{/atividades/editar/{id}(id=${atividade.id})}">Editar</a>
+                <a class="btn btn-sm btn-danger" th:href="@{/atividades/excluir/{id}(id=${atividade.id})}" onclick="return confirm('Deseja excluir esta atividade?')">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

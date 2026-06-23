@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/base :: head}"></head>
+<body>
+<nav th:replace="~{layout/base :: nav}"></nav>
+<div class="container">
+    <h1 th:text="${curso.id == null ? 'Novo Curso' : 'Editar Curso'}"></h1>
+
+    <form th:action="@{/cursos/salvar}" th:object="${curso}" method="post" class="card card-body bg-white">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="mb-3">
+            <label class="form-label">Nome</label>
+            <input class="form-control" th:field="*{nome}" placeholder="Ex: Sistemas de Informacao">
+            <div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Turno</label>
+            <input class="form-control" th:field="*{turno}" placeholder="Ex: Noturno">
+            <div class="text-danger" th:if="${#fields.hasErrors('turno')}" th:errors="*{turno}"></div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a class="btn btn-secondary" th:href="@{/cursos}">Voltar</a>
+        </div>
+    </form>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
