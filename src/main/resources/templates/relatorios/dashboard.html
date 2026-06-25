@@ -40,9 +40,40 @@
             <span class="badge text-bg-success">Mistral</span>
         </div>
 
-        <p class="text-muted mb-0 lh-lg" th:text="${resumoIA}">
-            O resumo gerado pela IA aparecerá aqui.
+        <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+            <button id="btnGerarResumoIa" type="button" class="btn btn-primary">
+                <span id="btnGerarResumoTexto">Gerar Insights com IA</span>
+                <span id="btnGerarResumoSpinner" class="spinner-border spinner-border-sm ms-2 d-none" aria-hidden="true"></span>
+            </button>
+            <small class="text-muted">Clique para consultar a Mistral sob demanda.</small>
+        </div>
+
+        <p id="resumoIaTexto" class="text-muted mb-0 lh-lg">
+            Clique no botão para gerar os insights do dashboard.
         </p>
+    </div>
+
+    <div class="card card-dashboard p-4 bg-white mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">Ferramentas de Engenharia (Mock de Dados com IA)</h4>
+            <span class="badge text-bg-secondary">Automação</span>
+        </div>
+
+        <p class="text-muted mb-3">
+            Use a IA para popular rapidamente o sistema com dados de teste e gerar atividades acadêmicas contextualizadas.
+        </p>
+
+        <div class="d-flex flex-wrap gap-3">
+            <button id="btnPopularDados" type="button" class="btn btn-success" onclick="popularDados()">
+                <span id="btnPopularDadosTexto">🪄 Gerar Cursos e Alunos</span>
+                <span id="btnPopularDadosSpinner" class="spinner-border spinner-border-sm ms-2 d-none" aria-hidden="true"></span>
+            </button>
+
+            <button id="btnGerarAtividades" type="button" class="btn btn-warning" onclick="gerarAtividades()">
+                <span id="btnGerarAtividadesTexto">📋 Gerar Atividades Inteligentes</span>
+                <span id="btnGerarAtividadesSpinner" class="spinner-border spinner-border-sm ms-2 d-none" aria-hidden="true"></span>
+            </button>
+        </div>
     </div>
 
     <div class="card card-dashboard p-4 bg-white">
@@ -52,8 +83,12 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script th:inline="javascript">
     const dadosStatus = [[${dadosStatus}]];
+    const totalCursos = [[${totalCursos}]];
+    const totalAlunos = [[${totalAlunos}]];
+    const totalAtividades = [[${totalAtividades}]];
     const labels = Object.keys(dadosStatus);
     const valores = Object.values(dadosStatus);
 
@@ -78,6 +113,98 @@
             }
         }
     });
+
+    const btnGerarResumoIa = document.getElementById('btnGerarResumoIa');
+    const btnGerarResumoTexto = document.getElementById('btnGerarResumoTexto');
+    const btnGerarResumoSpinner = document.getElementById('btnGerarResumoSpinner');
+    const resumoIaTexto = document.getElementById('resumoIaTexto');
+
+    async function gerarResumoIa() {
+        btnGerarResumoIa.disabled = true;
+        btnGerarResumoTexto.textContent = 'Gerando...';
+        btnGerarResumoSpinner.classList.remove('d-none');
+        resumoIaTexto.textContent = 'Consultando a IA e montando os insights do dashboard...';
+
+        const params = new URLSearchParams({
+            totalCursos: totalCursos,
+            totalAlunos: totalAlunos,
+            totalAtividades: totalAtividades
+        });
+
+        try {
+            const response = await fetch(`/api/ia/resumo?${params.toString()}`);
+
+            if (!response.ok) {
+                throw new Error(`Erro HTTP ${response.status}`);
+            }
+
+            const texto = await response.text();
+            resumoIaTexto.textContent = texto;
+        } catch (error) {
+            resumoIaTexto.textContent = 'Nao foi possivel gerar os insights com IA no momento.';
+            console.error('Erro ao buscar resumo da IA:', error);
+        } finally {
+            btnGerarResumoIa.disabled = false;
+            btnGerarResumoTexto.textContent = 'Gerar Insights com IA';
+            btnGerarResumoSpinner.classList.add('d-none');
+        }
+    }
+
+    btnGerarResumoIa.addEventListener('click', gerarResumoIa);
+</script>
+
+<script th:inline="javascript">
+    function alterarEstadoBotao(botaoId, textoId, spinnerId, carregando, textoOriginal) {
+        const botao = document.getElementById(botaoId);
+        const texto = document.getElementById(textoId);
+        const spinner = document.getElementById(spinnerId);
+
+        botao.disabled = carregando;
+        texto.textContent = carregando ? 'Carregando...' : textoOriginal;
+        spinner.classList.toggle('d-none', !carregando);
+    }
+
+    async function popularDados() {
+        alterarEstadoBotao('btnPopularDados', 'btnPopularDadosTexto', 'btnPopularDadosSpinner', true, '🪄 Gerar Cursos e Alunos');
+
+        try {
+            const response = await fetch('/api/ia/popular-dados', {
+                method: 'POST'
+            });
+
+            if (!response.ok) {
+                const erro = await response.text();
+                throw new Error(erro || 'Falha ao popular cursos e alunos.');
+            }
+
+            window.location.reload();
+        } catch (error) {
+            alert('Erro ao gerar cursos e alunos com IA: ' + error.message);
+        } finally {
+            alterarEstadoBotao('btnPopularDados', 'btnPopularDadosTexto', 'btnPopularDadosSpinner', false, '🪄 Gerar Cursos e Alunos');
+        }
+    }
+
+    async function gerarAtividades() {
+        alterarEstadoBotao('btnGerarAtividades', 'btnGerarAtividadesTexto', 'btnGerarAtividadesSpinner', true, '📋 Gerar Atividades Inteligentes');
+
+        try {
+            const response = await fetch('/api/ia/gerar-atividades', {
+                method: 'POST'
+            });
+
+            if (!response.ok) {
+                const erro = await response.text();
+                throw new Error(erro || 'Falha ao gerar atividades inteligentes.');
+            }
+
+            window.location.reload();
+        } catch (error) {
+            alert('Erro ao gerar atividades com IA: ' + error.message);
+        } finally {
+            alterarEstadoBotao('btnGerarAtividades', 'btnGerarAtividadesTexto', 'btnGerarAtividadesSpinner', false, '📋 Gerar Atividades Inteligentes');
+        }
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
