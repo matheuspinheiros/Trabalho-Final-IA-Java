@@ -3,7 +3,7 @@
 <head th:replace="~{layout/base :: head}"></head>
 <body>
 <nav th:replace="~{layout/base :: nav}"></nav>
-<div class="main-content">
+<div class="container">
     <h1 th:text="${curso.id == null ? 'Novo Curso' : 'Editar Curso'}"></h1>
 
     <form th:action="@{/cursos/salvar}" th:object="${curso}" method="post" class="card card-body bg-white">

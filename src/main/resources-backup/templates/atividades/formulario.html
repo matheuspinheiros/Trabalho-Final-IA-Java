@@ -3,7 +3,7 @@
 <head th:replace="~{layout/base :: head}"></head>
 <body>
 <nav th:replace="~{layout/base :: nav}"></nav>
-<div class="main-content">
+<div class="container">
     <h1 th:text="${atividade.id == null ? 'Nova Atividade' : 'Editar Atividade'}"></h1>
 
     <form th:action="@{/atividades/salvar}" th:object="${atividade}" method="post" class="card card-body bg-white">
