@@ -48,8 +48,8 @@ public class DataLoader implements CommandLineRunner {
         alunoRepository.save(aluno1);
 
         Aluno aluno2 = new Aluno();
-        aluno2.setNome("Erick Lino");
-        aluno2.setEmail("ericklino@gmail.com");
+        aluno2.setNome("Caio Januario");
+        aluno2.setEmail("caiojanuario@gmail.com");
         aluno2.setCurso(eds);
         alunoRepository.save(aluno2);
 

@@ -153,6 +153,7 @@ public class MistralIaService {
                 }
                 10. NENHUM campo pode ficar em branco ou vazio ("").
                 11. O campo dataEntrega DEVE ser preenchido obrigatoriamente com uma data válida YYYY-MM-DD em TODAS as atividades.
+                12. O campo descricao deve ser curto, contendo NO MAXIMO 150 caracteres.
                 """.formatted(dataAtual, alunosPrompt);
 
         long inicio = System.currentTimeMillis();

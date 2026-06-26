@@ -1,5 +1,6 @@
 package com.faculdade.crudweb.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -24,6 +25,7 @@ public class Atividade {
     @NotBlank(message = "O titulo e obrigatorio")
     private String titulo;
 
+    @Column(length = 1000)
     @NotBlank(message = "A descricao e obrigatoria")
     private String descricao;
 

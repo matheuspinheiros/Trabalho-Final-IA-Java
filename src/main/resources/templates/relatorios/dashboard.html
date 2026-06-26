@@ -14,21 +14,21 @@
     <div class="row g-3 mb-4">
         <div class="col-md-4">
             <div class="card card-dashboard text-center p-3 h-100">
-                <h5>📚 Cursos</h5>
+                <h5>Cursos</h5>
                 <strong class="display-6" th:text="${totalCursos}">0</strong>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="card card-dashboard text-center p-3 h-100">
-                <h5>👨‍🎓 Alunos</h5>
+                <h5>Alunos</h5>
                 <strong class="display-6" th:text="${totalAlunos}">0</strong>
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="card card-dashboard text-center p-3 h-100">
-                <h5>📝 Atividades</h5>
+                <h5>Atividades</h5>
                 <strong class="display-6" th:text="${totalAtividades}">0</strong>
             </div>
         </div>
@@ -65,12 +65,12 @@
 
         <div class="d-flex flex-wrap gap-3">
             <button id="btnPopularDados" type="button" class="btn btn-success" onclick="popularDados()">
-                <span id="btnPopularDadosTexto">🪄 Gerar Cursos e Alunos</span>
+                <span id="btnPopularDadosTexto">Gerar Cursos e Alunos</span>
                 <span id="btnPopularDadosSpinner" class="spinner-border spinner-border-sm ms-2 d-none" aria-hidden="true"></span>
             </button>
 
             <button id="btnGerarAtividades" type="button" class="btn btn-warning" onclick="gerarAtividades()">
-                <span id="btnGerarAtividadesTexto">📋 Gerar Atividades Inteligentes</span>
+                <span id="btnGerarAtividadesTexto">Gerar Atividades Inteligentes</span>
                 <span id="btnGerarAtividadesSpinner" class="spinner-border spinner-border-sm ms-2 d-none" aria-hidden="true"></span>
             </button>
         </div>
@@ -165,7 +165,7 @@
     }
 
     async function popularDados() {
-        alterarEstadoBotao('btnPopularDados', 'btnPopularDadosTexto', 'btnPopularDadosSpinner', true, '🪄 Gerar Cursos e Alunos');
+        alterarEstadoBotao('btnPopularDados', 'btnPopularDadosTexto', 'btnPopularDadosSpinner', true, 'Gerar Cursos e Alunos');
 
         try {
             const response = await fetch('/api/ia/popular-dados', {
@@ -181,12 +181,12 @@
         } catch (error) {
             alert('Erro ao gerar cursos e alunos com IA: ' + error.message);
         } finally {
-            alterarEstadoBotao('btnPopularDados', 'btnPopularDadosTexto', 'btnPopularDadosSpinner', false, '🪄 Gerar Cursos e Alunos');
+            alterarEstadoBotao('btnPopularDados', 'btnPopularDadosTexto', 'btnPopularDadosSpinner', false, 'Gerar Cursos e Alunos');
         }
     }
 
     async function gerarAtividades() {
-        alterarEstadoBotao('btnGerarAtividades', 'btnGerarAtividadesTexto', 'btnGerarAtividadesSpinner', true, '📋 Gerar Atividades Inteligentes');
+        alterarEstadoBotao('btnGerarAtividades', 'btnGerarAtividadesTexto', 'btnGerarAtividadesSpinner', true, 'Gerar Atividades Inteligentes');
 
         try {
             const response = await fetch('/api/ia/gerar-atividades', {
@@ -202,7 +202,7 @@
         } catch (error) {
             alert('Erro ao gerar atividades com IA: ' + error.message);
         } finally {
-            alterarEstadoBotao('btnGerarAtividades', 'btnGerarAtividadesTexto', 'btnGerarAtividadesSpinner', false, '📋 Gerar Atividades Inteligentes');
+            alterarEstadoBotao('btnGerarAtividades', 'btnGerarAtividadesTexto', 'btnGerarAtividadesSpinner', false, 'Gerar Atividades Inteligentes');
         }
     }
 </script>
